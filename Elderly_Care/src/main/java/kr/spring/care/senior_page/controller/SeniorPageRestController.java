@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +25,6 @@ import kr.spring.care.user.entity.User;
 import kr.spring.care.user_page.dto.UserDTO;
 import kr.spring.care.user_page.service.UserPageService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @RequestMapping("/m/seniorPage/*")
 @RestController
@@ -65,11 +63,10 @@ public class SeniorPageRestController {
 	}
 	
 	// 회원정보 수정
-	@PutMapping("edit")
-	@ResponseBody
-	public String edit(@RequestBody UserDTO userDTO) {
+	@PutMapping("updateInfo")
+	public ResponseEntity<String> edit(@RequestBody UserDTO userDTO) {
 		seniorPageService.editUser(userDTO);
-		return userDTO.getEmail();
+		return new ResponseEntity<>(userDTO.getEmail(), HttpStatus.OK);
 	}
 	
 	// 비밀번호 변경

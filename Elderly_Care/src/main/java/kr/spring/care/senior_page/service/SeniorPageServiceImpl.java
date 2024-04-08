@@ -84,7 +84,7 @@ public class SeniorPageServiceImpl implements SeniorPageService {
 		}
 	
 		// 보호자 정보가 없는 경우를 처리하기 위한 수정
-		// 보호자가 null 일때 insert?
+		// 보호자가 null 일때 insert
 	    Optional<Guardian> optionalGuardian = guardianPageRepository.findByUser_UserId(userDTO.getUserId());
 	    if (optionalGuardian.isPresent()) {
 	        Guardian bfGuard = optionalGuardian.get();

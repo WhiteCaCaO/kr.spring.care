@@ -70,7 +70,7 @@
             user.setCountry(userFormDto.getCountry());
             user.setGender(userFormDto.getGender());
             user.setImage(userFormDto.getImage());
-            user.setRole(Role.USER); // 또는 다른 Role 설정
+            user.setRole(Role.SENIOR); // 또는 다른 Role 설정
             user.setPassword(passwordEncoder.encode(userFormDto.getPassword()));
             user.setCreatedAt(LocalDateTime.now());
             user.setUpdatedAt(LocalDateTime.now());
