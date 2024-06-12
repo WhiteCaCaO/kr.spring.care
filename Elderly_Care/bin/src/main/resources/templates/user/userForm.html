@@ -21,14 +21,21 @@
 <!-- 사용자 스크립트 추가 -->
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+
+    
     <script th:inline="javascript">
         /*<![CDATA[*/
         var loginErrorMsg = /*[[${loginErrorMsg}]]*/ 'default message';
         if (loginErrorMsg && loginErrorMsg !== 'default message') {
             alert(loginErrorMsg);
         }
+
+    </script> -->
+
+=======
         /*]]>*/
     </script>
+>>>>>>> refs/remotes/origin/main
 </th:block>
 <title>회원 가입 페이지</title>
 </head>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div  class="header" th:fragment="header">
+
+  <nav class="navbar navbar-expand-lg" style="background-color: #0c3549;">
+
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+         <img src="/img/logo2.png" alt="THE 홈케어">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="탐색 전환">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" th:href="@{/seniorPage/myinfo/{id}(id=${loginId})}" style="color: #fff;">나의정보</a>
+          </li>
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" th:href="@{/seniorPage/matchingInfo/{id}(id=${loginId})}" style="color: #fff;">매칭정보</a>
+          </li>
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="/user/logout" style="color: #fff;">로그아웃</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="지역, 이름, 전화번호로 검색 가능" aria-label="Search" />
+          <button class="btn btn-outline-info" type="submit">
+            <font style="vertical-align: inherit">
+              <font style="vertical-align: inherit">Search</font>
+            </font>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</div>
+
+</html>

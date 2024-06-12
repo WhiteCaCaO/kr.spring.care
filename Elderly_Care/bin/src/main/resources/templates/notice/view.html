@@ -3,14 +3,15 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 
-<div layout:fragment="content" class="content">
 	<body>
+	<div layout:fragment="content" class="content">
 		<div class="container">
 			<h3 th:text="${notice.title}"></h3>
 
 			<div class="mb-3">
 				<label for="num">No:</label> <input type="text" class="form-control"
-					id="num" th:value="${notice.num}" th:data-notice-num="${notice.num}" readonly="readonly">
+					id="num" th:value="${notice.num}"
+					th:data-notice-num="${notice.num}" readonly="readonly">
 			</div>
 
 			<div class="mb-3 mt-3">
@@ -30,16 +31,16 @@
 			</div>
 			<!-- <div sec:authorize="hasRole('ADMIN')"> -->
 			<!-- 게시글 수정, 삭제, 뒤로가기 버튼 -->
-            <div>
-                <div class="text-end">
-                    <button type="button" class="btn btn-secondary btn-sm"
-                        id="btnUpdate" onclick="updateNotice()">수정</button>
-                    <button type="button" class="btn btn-danger btn-sm" id="btnDelete"
-                        onclick="deleteNotice()">삭제</button>
-                    <button type="button" class="btn btn-success btn-sm" id="btnDelete"
-                        onclick="goBack()">뒤로가기</button>
-                </div>
-            </div>
+			<div>
+				<div class="text-end">
+					<button type="button" class="btn btn-secondary btn-sm"
+						id="btnUpdate" onclick="updateNotice()">수정</button>
+					<button type="button" class="btn btn-danger btn-sm" id="btnDelete"
+						onclick="deleteNotice()">삭제</button>
+					<button type="button" class="btn btn-success btn-sm" id="btnDelete"
+						onclick="goBack()">뒤로가기</button>
+				</div>
+			</div>
 		</div>
 
 		<script>
@@ -92,6 +93,6 @@
 				}
 			</script>
 		</th:block>
-	</body>
-</div>
+	</div>
+</body>
 </html>

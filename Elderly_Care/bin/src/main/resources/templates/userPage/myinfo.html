@@ -4,5 +4,151 @@
 	layout:decorate="~{layouts/userLayout}">
 
 <div layout:fragment="content" class="content">
-	<h2>나의정보 페이지</h2>
-<div>
+	<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <div class="card card-custom">
+                <div class="card-body p-4">
+                    <div class="profile-img-container mb-2">
+                        <img th:src="@{/img/defaultMale.png}" alt="Profile image">
+                    </div>
+                    <p class="text-center text-muted mb-3" id="email" th:text="${myInfo.email}">user@example.com</p>
+                    
+					<div class="centered-container">                   
+                    <!-- 사용자 정보 -->
+                    <div class="input-group">
+					    <label class="input-label" for="gender"></label>
+					    <div class="radio-group">
+					        <input type="radio" id="male" name="gender" th:value="Male" th:text="남성" th:checked="${myInfo.gender == 'Male'}" >
+					        
+					        <input type="radio" id="female" name="gender" th:value="Female" th:text="여성" th:checked="${myInfo.gender == 'Female'}" >
+					    </div>
+					</div>
+                    <div class="input-group">
+	                    <strong>이름</strong><input type="text" class="underline-input" name="name" 
+	                    th:value="${myInfo.name != null ? myInfo.name : ''}" placeholder="이름" />
+                    </div>
+                    <div class="input-group">
+	                    <strong>권한</strong><input type="text" class="underline-input" name="role" 
+	                    th:value="${myInfo.role != null ? myInfo.role : ''}" readonly="readonly" />
+                    </div>
+                    <div class="input-group">
+	                    <strong>가입일</strong><input type="text" class="underline-input" name="createdAt" 
+	                    th:value="${#temporals.format(myInfo.createdAt, 'yyyy-MM-dd HH:mm')}" readonly="readonly" />
+                    </div>
+                    <div class="input-group">
+	                    <strong>주소</strong><input type="text" class="underline-input" name="address" 
+	                    th:value="${myInfo.address != null ? myInfo.address : ''}" placeholder="주소" />
+                    </div>
+                   
+                    <div class="input-group">
+	                    <strong>연락처</strong><input type="text" class="underline-input" name="phoneNumber" 
+	                    th:value="${myInfo.phoneNumber != null ? myInfo.phoneNumber : ''}" placeholder="연락처" />
+                    </div>
+                    <div class="input-group">
+	                    <strong>비밀번호</strong><input type="password" class="underline-input" name="password" placeholder="새 비밀번호" />
+					</div>
+					<div class="input-group">
+					    <strong>비밀번호 확인</strong><input type="password" class="underline-input" name="passwordConfirm" placeholder="새 비밀번호 확인" />
+					</div>
+                    <!-- 작업 버튼 -->
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-outline-primary" id="edit">정보 수정</button>
+                        <button type="button" class="btn btn-outline-warning" id="editPw">비밀번호 변경</button>
+                        <a href="/user/logout" type="button" class="btn btn-outline-danger">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script th:inline="javascript">
+
+// 나의 정보 수정
+$(document).on("click", "#edit", function(){
+	if(!confirm("회원 정보를 변경하시겠습니까?")){
+		return false
+	}
+	var loginId = /*[[${loginId}]]*/ 'defaultUserId'
+	var emailValue = /*[[${myInfo.email}]]*/ 'defaultEmail';
+	var genderValue = $("input[name='gender']:checked").val();
+    var nameValue = $("input[name='name']").val(); 
+    var addressValue = $("input[name='address']").val(); 
+    var phoneNumberValue = $("input[name='phoneNumber']").val();
+    
+    
+	var editData = {
+		"userId": loginId,
+		"email": emailValue,
+		"gender": genderValue,
+		"name": nameValue,
+		"address": addressValue,
+		"phoneNumber": phoneNumberValue 
+	}
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	
+    $.ajax({
+		type: "PUT",
+		url: "/userPage/edit",
+		contentType: "application/json",
+		data: JSON.stringify(editData),
+		/* dataType: "json", */
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        }
+	})
+	.done(function(resp){
+		alert("'"+resp+"'님의 정보 수정완료!");
+		
+	})
+	.fail(function(e){
+		alert("정보 수정실패"+ e);
+	})
+})
+
+// 비밀번호 변경
+$(document).on("click", "#editPw", function(){
+	var loginId = /*[[${loginId}]]*/ 'defaultUserId'
+	var pwValue = $("input[name='password']").val();
+	var pwConfirmValue = $("input[name='passwordConfirm']").val()
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+ 	
+    // 비밀번호와 비밀번호 확인 값이 일치하는지 검증
+    if (pwValue !== pwConfirmValue) {
+        alert("새 비밀번호가 일치하지 않습니다.");
+        $("input[name='passwordConfirm']").val("");
+        return; // 비밀번호 불일치시 아래 AJAX 호출을 중단
+    }
+	$.ajax({
+		type: "PUT",
+		url: "/userPage/editPw",
+		contentType: "application/json",
+		data: JSON.stringify({
+			"userId": loginId,
+			"password": pwValue
+		}),
+		
+		beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken);
+        }
+	})
+	.done(function(resp){
+		alert("비밀번호 변경 완료!");
+		$("input[name='password']").val("");
+		$("input[name='passwordConfirm']").val("");
+	})
+	.fail(function(e){
+		alert("비밀번호 변경 실패"+ e);
+		$("input[name='password']").val("");
+		$("input[name='passwordConfirm']").val("");
+	})
+})
+
+
+</script>	
+</div>

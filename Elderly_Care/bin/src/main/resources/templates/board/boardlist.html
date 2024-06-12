@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layouts/layout1}">
+	layout:decorate="~{layouts/boardLayout}">
 
 
 <div layout:fragment="content" class="content">
@@ -36,42 +36,33 @@
 		</table>
 		
  		<!-- 페이징 -->
-	<div class="pagination d-flex justify-content-center">
-            <ul class="pagination">
-            <!-- 첫 번째 페이지 가는 것 -->
-             <li class="page-item">
-                <a 
-                th:href="@{/board/boardlist(page=1)}">
-                <span aria-hidden="true">&laquo;</span>
-                </a>
-             </li>
-             <!-- 직전 페이지 -->
-             <li class="page-item">
-                <a th:href="${boards.first} ? '#' : @{/board/boardlist(page=${boards.number})}">
-                이전
-                </a>
-             </li>
-             <!-- 숫자 페이지 -->
-                <li class="page-item">
-                   <span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-                     <span th:if="${page == boards.number + 1}" th:text="${page}"></span>
-                     <span th:unless="${page == boards.number + 1}">
-                        <a th:href="@{/board/boardlist(page=${page})}" th:text="${page}"></a>
-                     </span>
-                  </span>
-                </li>
-             <!-- 직후 페이지 -->   
-             <li class="page-item">
-                <a  th:href="${boards.last} ? '#' : @{/board/boardlist(page=${boards.number + 2})}">
-                다음</a>
-             </li>
-             <!-- 맨 끝 -->
-             <li class="page-item">
-                <a  th:href="@{/board/boardlist(page=${boards.totalPages})}">
-                &raquo;</a>
-             </li>
-          </ul>
-          </div>
+		<div class="container mt-3">
+	    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${boards.first} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${boards.first}"
+                th:onclick="|location.href='@{/board/boardlist(page=1, field=${field}, word=${word})}'|">&laquo;</button>
+        </li>
+        <li class="page-item" th:classappend="${boards.first} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${boards.first}"
+                th:onclick="|location.href='@{/board/boardlist(page=${boards.number}, field=${field}, word=${word})}'|">이전</button>
+        </li>
+        <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <button class="pagination-btn" 
+                th:classappend="${page == boards.number + 1} ? 'active' : ''" 
+                th:onclick="|location.href='@{/board/boardlist(page=${page}, field=${field}, word=${word})}'|" 
+                th:text="${page}">
+            </button>
+        </li>
+        <li class="page-item" th:classappend="${boards.last} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${boards.last}"
+                th:onclick="|location.href='@{/board/boardlist(page=${boards.number + 2}, field=${field}, word=${word})}'|">다음</button>
+        </li>
+        <li class="page-item" th:classappend="${boards.last} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${boards.last}"
+                th:onclick="|location.href='@{/board/boardlist(page=${boards.totalPages}, field=${field}, word=${word})}'|">&raquo;</button>
+        </li>
+	    </ul>
+	  </div>
 
 
 		<!-- 하단 검색창 -->

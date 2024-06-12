@@ -24,8 +24,9 @@
         <textarea class="form-control" rows="5" id="content" name="content"
                   th:text="${notice.content}"></textarea>
     </div>
-    <div class="">
-        <button type="button" class="btn btn-secondary btn-sm" id="btnModify">수정</button>
+    <div class="" sec:authorize="hasRole('ADMIN')">
+        <button type="button" class="btn btn-secondary btn-sm" id="btnModify" 
+        sec:authorize="hasRole('ADMIN')">수정</button>
     </div>
 </div>
 

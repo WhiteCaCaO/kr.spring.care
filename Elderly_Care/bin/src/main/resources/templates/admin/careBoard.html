@@ -30,65 +30,85 @@
                         <th scope="col">경력</th>
                         <th scope="col">자격증</th>
                         <th scope="col">이용가능시간</th>
-                        <th scope="col">상세정보</th>
                         <th scope="col">삭제</th>
                     </tr>
                     </thead>
                     <tbody class="text-center">
                     <tr th:each="care : ${allCare}">
                             <td th:text="${care.caregiverId}">1</td>
-                            <td th:text="${care.user.name}">이름</td>
+                            <td>
+                            	<button type="button" class="user-detail-btn rounded" id="nameModal" data-bs-toggle="modal" 
+                            	data-bs-target="#myModal" th:data-userid="${care.caregiverId}" th:text="${care.user.name}">
+                           	</button>
+                            </td>
                             <td th:text="${care.user.country}">지역</td>
                             <td th:text="${care.experience}">경력</td>
                             <td th:text="${care.certification}">자격증</td>
                             <td th:text="${care.availableHours}">이용가능시간</td>
                             <td>
-                            <button type="button" class="user-detail-btn" th:text="상세정보">
-                            	</button>
-                           	</td>
-                            <td>
-                            <button type="button" class="btn btn-danger delBtn" th:data-id="${care.caregiverId}">삭제</button>
+                            <button type="button" class="btn btn-danger delBtn" th:data-id="${care.caregiverId}"
+                            data-bs-placement="right" id="dropBtn" 
+                            data-bs-toggle="tooltip" title="Drop!">삭제</button>
                             </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             
-            <!-- 페이징 -->
-            <div class="container mt-3">
-            <ul class="pagination justify-content-center">
-			    <li class="page-item">
-			    	<a 
-			    	th:href="@{/admin/careList(page=1)}">
-			    	<span aria-hidden="true">&laquo;&nbsp;</span>
-			    	</a>
-			    </li>
-			    <li class="page-item">
-				    <a th:href="${allCare.first} ? '#' : @{/admin/careList(page=${allCare.number})}">
-				    이전&nbsp;
-				    </a>
-			    </li>
-				    <li class="page-item">
-				    	<span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-		            	<span th:if="${page == allCare.number + 1}" th:text="${page}"></span>
-		            	<span th:unless="${page == allCare.number + 1}">
-		            		<a th:href="@{/admin/careList(page=${page})}" th:text="${page}"></a>
-		            	</span>
-		            </span>
-				    </li>
-			    <li class="page-item">
-				    <a  th:href="${allCare.last} ? '#' : @{/admin/careList(page=${allCare.number + 2})}">
-				    &nbsp;다음</a>
-			    </li>
-			    <li class="page-item">
-				    <a  th:href="@{/admin/careList(page=${allCare.totalPages})}">
-				    &nbsp;&raquo;</a>
-			    </li>
+           <!-- 페이징 -->
+           <div class="container mt-3">
+		   <ul class="pagination justify-content-center">
+	       <li class="page-item" th:classappend="${allCare.first} ? 'disabled' : ''">
+	            <button class="pagination-btn" th:disabled="${allCare.first}"
+	                th:onclick="|location.href='@{/admin/careList(page=1, field=${field}, word=${word})}'|">&laquo;</button>
+	       </li>
+	       <li class="page-item" th:classappend="${allCare.first} ? 'disabled' : ''">
+	            <button class="pagination-btn" th:disabled="${allCare.first}"
+	                th:onclick="|location.href='@{/admin/careList(page=${allCare.number}, field=${field}, word=${word})}'|">이전</button>
+	       </li>
+	       <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+	            <button class="pagination-btn" 
+	                th:classappend="${page == allCare.number + 1} ? 'active' : ''" 
+	                th:onclick="|location.href='@{/admin/careList(page=${page}, field=${field}, word=${word})}'|" 
+	                th:text="${page}">
+	            </button>
+	       </li>
+	       <li class="page-item" th:classappend="${allCare.last} ? 'disabled' : ''">
+	            <button class="pagination-btn" th:disabled="${allCare.last}"
+	                th:onclick="|location.href='@{/admin/careList(page=${allCare.number + 2}, field=${field}, word=${word})}'|">다음</button>
+	       </li>
+	        <li class="page-item" th:classappend="${allCare.last} ? 'disabled' : ''">
+	            <button class="pagination-btn" th:disabled="${allCare.last}"
+	                th:onclick="|location.href='@{/admin/careList(page=${allCare.totalPages}, field=${field}, word=${word})}'|">&raquo;</button>
+	        </li>
 		    </ul>
-		    </div>
+		  	</div>
 	</div>
 </div>
 </div>
+	<!-- 모달 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+       	<div class="modal-dialog" role="document">
+       		<div class="modal-content">
+       			<!-- 모달 header -->
+       			<div class="modal-header">
+       				<h5 class="modal-title" id="myModalLabel" data-userid="${care.caregiverId}">상세정보</h5>
+       				<button type="button" class="btn-close" data-bs-dismiss="modal"
+       				  aria-label="Close"></button>
+       			</div>
+       			
+       			<!-- 모달 body -->
+       			<div class="modal-body">
+                   
+       			</div>
+       			<!-- 모달 footer -->
+       			<div class="modal-footer">
+       				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+       			</div>
+       		</div>
+       	</div>  
+       </div>
 <script>
 	/* 요양보호사 구인 삭제 */
 	$(document).on("click", ".delBtn", function(){
@@ -113,11 +133,53 @@
 		})
 	})
 
+// 요양보호사 상세정보(모달)
+	document.addEventListener("DOMContentLoaded", function(){
+		document.querySelectorAll(".user-detail-btn").forEach(item => {
+			item.addEventListener("click", event => {
+				const button = event.target.closest(".user-detail-btn");
+				const caregiverId = button.getAttribute("data-userid");
+				console.log(caregiverId)
+				fetch(`/admin/getCareInfo?userId=${caregiverId}`)
+				.then(response => {
+				    if (!response.ok) {
+				        throw new Error('Network response was not ok');
+				    }
+				    return response.json();
+				})
+				.then(data => {
+					const date = new Date(data.createdAt);
 
+					const formattedDate = date.getFullYear() + '-' +
+					                      ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
+					                      ('0' + date.getDate()).slice(-2) + ' ' +
+					                      ('0' + date.getHours()).slice(-2) + ':' +
+					                      ('0' + date.getMinutes()).slice(-2);
+					                      
+					document.querySelector(".modal-title").textContent = `${data.user.name} 님의 상세정보`;			
+					document.querySelector(".modal-body").innerHTML = 
+						`<p>ID : ${data.caregiverId}</p>`+
+						`<p>이름 : ${data.user.name}</p>`+
+						`<p>지역 : ${data.country}</p>`+
+						`<p>경력 : ${data.experience}</p>`+
+						`<p>자격증 : ${data.certification}</p>`+
+						`<p>이용가능시간 : ${data.availableHours}</p>`;
+						
+					
+						
+				}).catch(error => {
+					console.error("Error fetching user details:", error);
+				})
+			})
+		})
+	})	
 
+	//Initialize tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 
 </script>
-
-
 
 </div>

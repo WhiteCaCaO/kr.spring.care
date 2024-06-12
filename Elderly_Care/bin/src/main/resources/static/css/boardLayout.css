@@ -1,0 +1,144 @@
+html {
+	position: relative;
+	min-height: 100%;
+	margin: 0;
+}
+
+.header .custom-btn {
+	/* 버튼의 테두리 색상 설정 */
+	background-color: #d591a5;
+	border-color: #a67488; /* 여기에 원하는 테두리 색상을 지정하세요 */
+}
+
+
+body {
+	min-height: 100%;
+	margin: 0; /* 기존의 body margin을 제거합니다. */
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 15px 0;
+	text-align: center;
+	background-color: #f8f9fa;
+	z-index: 1000;
+}
+
+.content {
+	margin-left: 100px; /* 좌측 마진을 줄입니다. */
+	margin-right: 100px; /* 우측 마진을 줄입니다. */
+	max-width: 1600px; /* content의 최대 너비를 조절합니다. */
+	margin: 0 auto; /* 가운데 정렬을 위해 좌우 마진을 자동으로 조정합니다.*/
+	padding-top: 50px; /* content 위에 공간을 확보합니다. */
+	padding-bottom: 100px; /* content 아래에 공간을 확보합니다. */
+}
+
+@media ( max-width : 1600px) {
+	.content {
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+}
+
+
+#nameModal:hover{
+	background-color: #B0E0E6;
+}
+
+#auth:hover {
+    background-color: #90EE90 !important; /* 배경색 설정 */
+    color: #333; /* 텍스트 색상 설정, 필요에 따라 변경 */
+}
+.header .nav-item .nav-link {
+	font-family: "Jua", sans-serif;
+	font-size: 24px;
+	font-weight: 400;
+	font-style: normal;
+	
+}
+
+body {
+	min-height: 100%;
+	margin: 0; /* 기존의 body margin을 제거합니다. */
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 15px 0;
+	text-align: center;
+	background-color: #f8f9fa;
+	z-index: 1000;
+}
+
+.content {
+	margin-left: 100px; /* 좌측 마진을 줄입니다. */
+	margin-right: 100px; /* 우측 마진을 줄입니다. */
+	max-width: 1600px; /* content의 최대 너비를 조절합니다. */
+	margin: 0 auto; /* 가운데 정렬을 위해 좌우 마진을 자동으로 조정합니다.*/
+	padding-top: 50px; /* content 위에 공간을 확보합니다. */
+	padding-bottom: 100px; /* content 아래에 공간을 확보합니다. */
+}
+
+@media ( max-width : 1600px) {
+	.content {
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+}
+
+#nameModal:hover{
+	background-color: #B0E0E6;
+}
+
+#authBtn:hover {
+    background-color: #90EE90 !important; /* 배경색 설정 */
+    color: #333; /* 텍스트 색상 설정, 필요에 따라 변경 */
+}
+
+th, td {
+  vertical-align : middle;
+}
+
+
+
+/* Pagination Custom Styles */
+
+/* 기본 페이징 버튼 스타일 */
+.pagination-btn {
+    color: #333; /* 기본 텍스트 색상을 짙은 회색으로 설정 */
+    background-color: #f8f9fa; /* 기본 배경색을 연한 회색으로 설정 */
+    border: 1px solid #ddd; /* 테두리를 연한 회색으로 설정 */
+    margin: 0 5px; /* 버튼 사이의 여백 설정 */
+    padding: 5px 10px; /* 내부 패딩 설정 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    cursor: pointer; /* 마우스 오버 시 커서를 포인터로 변경 */
+    border-radius: 4px; /* 둥근 테두리 효과 */
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s; /* 부드러운 색상 전환 효과 */
+}
+
+/* 호버 효과 */
+.pagination-btn:hover {
+    background-color: #e2e6ea; /* 마우스 오버 시 배경색 변경 */
+    border-color: #d1d4d7; /* 마우스 오버 시 테두리 색상 변경 */
+}
+
+/* 활성화된 버튼 스타일 */
+.pagination-btn.active, .pagination-btn:active {
+    color: #fff; /* 활성화된 버튼의 텍스트 색상을 흰색으로 설정 */
+    background-color: #007bff; /* 활성화된 버튼의 배경색을 부트스트랩 프라이머리 색상으로 설정 */
+    border-color: #007bff; /* 테두리 색상도 동일하게 설정 */
+}
+
+/* 비활성화된 버튼 스타일 */
+/* .pagination-btn.disabled, .pagination-btn:disabled {
+    color: #6c757d; 비활성화된 버튼의 텍스트 색상을 회색으로 설정
+    background-color: #f8f9fa; 비활성화된 버튼의 배경색을 유지
+    border-color: #ddd; 비활성화된 버튼의 테두리 색상을 유지
+    cursor: not-allowed; 비활성화된 버튼에 대한 커서 스타일 변경
+} */

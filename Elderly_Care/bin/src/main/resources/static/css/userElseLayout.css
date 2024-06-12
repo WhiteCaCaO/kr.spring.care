@@ -1,0 +1,239 @@
+html {
+	position: relative;
+	min-height: 100%;
+	margin: 0;
+}
+
+.header .custom-btn {
+	/* 버튼의 테두리 색상 설정 */
+	background-color: #d591a5;
+	border-color: #a67488; /* 여기에 원하는 테두리 색상을 지정하세요 */
+}
+
+.header .nav-item .nav-link {
+	font-family: "Jua", sans-serif;
+	font-size: 24px;
+	font-weight: 400;
+	font-style: normal;
+	
+}
+
+body {
+	min-height: 100%;
+	margin: 0; /* 기존의 body margin을 제거합니다. */
+}
+
+.footer {
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 15px 0;
+	text-align: center;
+	background-color: #f8f9fa;
+	z-index: 1000;
+}
+
+.content {
+	margin-left: 100px; /* 좌측 마진을 줄입니다. */
+	margin-right: 100px; /* 우측 마진을 줄입니다. */
+	max-width: 1600px; /* content의 최대 너비를 조절합니다. */
+	margin: 0 auto; /* 가운데 정렬을 위해 좌우 마진을 자동으로 조정합니다.*/
+	padding-top: 5px; /* content 위에 공간을 확보합니다. */
+	padding-bottom: 100px; /* content 아래에 공간을 확보합니다. */
+}
+
+@media ( max-width : 1600px) {
+	.content {
+		margin-left: 50px;
+		margin-right: 50px;
+	}
+}
+
+.profile-img-container {
+            width: 150px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+        .profile-img-container img {
+            width: 100%;
+            height: auto;
+        }
+        .card-custom {
+            border: none;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+       
+
+
+
+
+.inline-radio {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+
+/* strong {
+    margin-right: 5px;
+} */        
+ 
+  
+.centered-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px; /* 콘텐츠의 최대 너비를 설정합니다 */
+    margin: auto; /* 상위 컨테이너에서 가운데 정렬 */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 박스에 그림자를 추가합니다 */
+    border-radius: 8px; /* 모서리를 둥글게 처리합니다 */
+    background-color: #ffffff; /* 배경색을 흰색으로 설정합니다 */
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 요소들을 양 끝으로 정렬하고 중앙에 공간을 둡니다. */
+   /*  justify-content: flex-start; */
+    width: 100%;
+    margin-bottom: 15px;
+}
+/* .input-label {
+    margin-right: 10px; 라벨과 인풋 사이의 간격
+    width: 80px; 라벨의 너비 고정
+    text-align: right; 라벨 내용을 오른쪽 정렬
+    font-weight: bold;
+} */
+
+/* .underline-input, .radio-group {
+    flex-grow: 1; 나머지 공간을 채우도록 함
+    border-bottom: 2px solid #000; 일관된 밑줄 스타일 적용
+    padding: 10px 0;
+} */
+.input-group strong {
+    flex: 0 0 auto; /* strong 태그는 크기가 변하지 않고 내용물의 크기를 유지합니다. */
+}
+
+.underline-input, input[type="password"] {
+    border: none;
+    border-bottom: 2px solid #000;
+    padding: 5px;
+    outline: none;
+    text-align: center;
+    flex: 1 1 auto; /* input 필드는 가능한 모든 공간을 차지하되, 필요에 따라 크기가 조절됩니다. */
+    margin: 0 20px; /* 양 옆에 여백을 추가하여 중앙에 위치하도록 합니다. */
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.underline-input:focus {
+    border-bottom: 2px solid #5D5FEF;
+}
+
+strong {
+    color: #333; /* Strong 태그 색상 변경 */
+    font-size: 16px; /* 폰트 크기 조정 */
+    
+}
+
+#email{
+	font-weight: bold;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px; /* 버튼 상단 간격 추가 */
+}
+
+/* 버튼 스타일 */
+.btn-primary {
+    background-color: #5D5FEF;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #4345d1;
+}
+
+.btn-danger {
+    background-color: #ff4757;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #ff6b81;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .centered-container {
+        width: 90%;
+    }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* 제목 스타일 */
+  .table th {
+    background-color: #f2f2f2;
+  }
+
+  /* 지난 매칭 스타일 */
+  .past-matching .table th {
+    background-color: #d9ead3; /* 연두색 */
+  }
+
+  /* 현재 매칭 스타일 */
+  .current-matching .table th {
+    background-color: #cfe2f3; /* 연한 파랑색 */
+  }
+
+  /* 매칭 결과에 따른 글자 색 */
+  .table td.status-completed {
+    color: green; /* 완료 - 녹색 */
+    font-weight: bold;
+  }
+  
+  .table td.status-cancelled {
+    color: red; /* 취소 - 빨간색 */
+    font-weight: bold;
+  }
+  
+  .table td.status-posted,
+  .table td.status-requested,
+  .table td.status-in-progress {
+    color: blue; /* 구직중, 요청중, 진행중 - 파란색 */
+    font-weight: bold;
+  }
+  
+  /* 테이블 테두리 스타일 */
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+.table th, 
+.table td {
+  text-align: center; /* 테이블 헤더와 셀 내용을 가운데 정렬합니다 */
+}
+
+.table th:nth-child(2), /* 테이블 헤더에서 요양 보호사 이름 열 */
+.table td:nth-child(2) { /* 테이블 데이터에서 요양 보호사 이름 열 */
+  width: 150px; /* 원하는 너비로 설정하세요 */
+  /* 필요에 따라 추가적인 스타일을 적용할 수 있습니다 */
+}
+  
+        

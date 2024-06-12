@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2" th:text="'회원관리('+ ${userCnt} +'/'+ ${AlluserCnt} +')'">회원관리</h1>
-                <form class="d-flex justify-content-between" action="/admin/totUser" method="get">
+                <form class="d-md-flex gap-2" action="/admin/totUser" method="get">
                 	<select class="form-select form-select" name="field">
                 		<option value="name">이름</option>
                 		<option value="email">이메일</option>
@@ -28,7 +28,6 @@
                         <th scope="col">이름</th>
                         <th scope="col">이메일</th>
                         <th scope="col">가입 날짜</th>
-                        <!-- <th scope="col">Agree_Event</th> -->
                         <th scope="col">현재 권한</th>
                         <th scope="col">권한 선택</th>
                         <th scope="col">변경</th>
@@ -49,7 +48,7 @@
                            
                             
                             <td th:text="${user.email}">email</td>
-                            <td th:text="${user.createdAt}">created_at</td>
+                            <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm')}">created_at</td>
                             <!-- <td th:text="${user.isAgreeEvent()}">agree_event</td> -->
                             <td th:text="${user.role}">role</td>
                             <td>    
@@ -66,6 +65,7 @@
                                     권한변경
                                 </button>
                             </td>
+                            
                         </form>
                             <td><button class="btn btn-danger" data-bs-placement="right" id="dropBtn" 
                                   data-bs-toggle="tooltip" title="Drop!" type="button"
@@ -78,105 +78,110 @@
                 </table>
             </div>
             
-            <!-- 페이징 -->
-            <div class="container mt-3">
-            <ul class="pagination justify-content-center">
-			    <li class="page-item">
-			    	<a 
-			    	th:href="@{/admin/totUser(page=1)}">
-			    	<span aria-hidden="true">&laquo;&nbsp;</span>
-			    	</a>
-			    </li>
-			    <li class="page-item">
-				    <a th:href="${allUser.first} ? '#' : @{/admin/totUser(page=${allUser.number})}">
-				    이전&nbsp;
-				    </a>
-			    </li>
-				    <li class="page-item">
-				    	<span th:each="page: ${#numbers.sequence(startPage, endPage)}">
-		            	<span th:if="${page == allUser.number + 1}" th:text="${page}"></span>
-		            	<span th:unless="${page == allUser.number + 1}">
-		            		<a th:href="@{/admin/totUser(page=${page})}" th:text="${page}"></a>
-		            	</span>
-		            </span>
-				    </li>
-			    <li class="page-item">
-				    <a  th:href="${allUser.last} ? '#' : @{/admin/totUser(page=${allUser.number + 2})}">
-				    &nbsp;다음</a>
-			    </li>
-			    <li class="page-item">
-				    <a  th:href="@{/admin/totUser(page=${allUser.totalPages})}">
-				    &nbsp;&raquo;</a>
-			    </li>
-		    </ul>
-		    </div>
+     <!-- 페이징 -->
+     <div class="container mt-3">
+	    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${allUser.first} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${allUser.first}"
+                th:onclick="|location.href='@{/admin/totUser(page=1, field=${field}, word=${word})}'|">&laquo;</button>
+        </li>
+        <li class="page-item" th:classappend="${allUser.first} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${allUser.first}"
+                th:onclick="|location.href='@{/admin/totUser(page=${allUser.number}, field=${field}, word=${word})}'|">이전</button>
+        </li>
+        <li class="page-item" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <button class="pagination-btn" 
+                th:classappend="${page == allUser.number + 1} ? 'active' : ''" 
+                th:onclick="|location.href='@{/admin/totUser(page=${page}, field=${field}, word=${word})}'|" 
+                th:text="${page}">
+            </button>
+        </li>
+        <li class="page-item" th:classappend="${allUser.last} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${allUser.last}"
+                th:onclick="|location.href='@{/admin/totUser(page=${allUser.number + 2}, field=${field}, word=${word})}'|">다음</button>
+        </li>
+        <li class="page-item" th:classappend="${allUser.last} ? 'disabled' : ''">
+            <button class="pagination-btn" th:disabled="${allUser.last}"
+                th:onclick="|location.href='@{/admin/totUser(page=${allUser.totalPages}, field=${field}, word=${word})}'|">&raquo;</button>
+        </li>
+	    </ul>
+	  </div>
             
-            <!-- 모달 -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-              aria-labelledby="myModalLabel" aria-hidden="true">
-            	<div class="modal-dialog" role="document">
-            		<div class="modal-content">
-            			<!-- 모달 header -->
-            			<div class="modal-header">
-            				<h5 class="modal-title" id="myModalLabel" data-userid="${user.userId}">상세정보</h5>
-            				<button type="button" class="btn-close" data-bs-dismiss="modal"
-            				  aria-label="Close"></button>
-            			</div>
-            			
-            			<!-- 모달 body -->
-            			<div class="modal-body">
-	                       
-            			</div>
-            			<!-- 모달 footer -->
-            			<div class="modal-footer">
-            				<form id="roleSelectForm">
-            					<label for="roleSelect">Role:</label>
-            					<select id="roleSelect" name="role">
-            						<option value="USER">USER</option>
-            						<option value="CAREGIVER">CAREGIVER</option>
-            						<option value="SENIOR">SENIOR</option>
-            						<option value="GUARDIAN">GUARDIAN</option>
-            					</select>
-            					<button type="submit" class="btn btn-primary">권한변경</button>
-            				</form>
-            				
-            				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-            			</div>
-            		</div>
-            	</div>  
-            </div>
-            			
-            		</div>
-            	</div>  
-        </div>
+       <!-- 모달 -->
+       <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+       	<div class="modal-dialog" role="document">
+       		<div class="modal-content">
+       			<!-- 모달 header -->
+       			<div class="modal-header">
+       				<h5 class="modal-title" id="myModalLabel" data-userid="${user.userId}">상세정보</h5>
+       				<button type="button" class="btn-close" data-bs-dismiss="modal"
+       				  aria-label="Close"></button>
+       			</div>
+       			
+       			<!-- 모달 body -->
+       			<div class="modal-body">
+                   
+       			</div>
+       			<!-- 모달 footer -->
+       			<div class="modal-footer">
+       				<form id="roleSelectForm">
+       					<label for="roleSelect">Role:</label>
+       					<select id="roleSelect" name="role">
+       						<option value="USER">USER</option>
+       						<option value="CAREGIVER">CAREGIVER</option>
+       						<option value="SENIOR">SENIOR</option>
+       						<option value="GUARDIAN">GUARDIAN</option>
+       					</select>
+       					<button type="submit" class="btn btn-primary">권한변경</button>
+       				</form>
+       				
+       				<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+       			</div>
+       		</div>
+       	</div>  
+       </div>
+    			
+		</div>
+	</div>  
+</div>
 
 <script>
+// 모달 상세정보
 document.addEventListener("DOMContentLoaded", function(){
 	document.querySelectorAll(".user-detail-btn").forEach(item => {
 		item.addEventListener("click", event => {
 			const button = event.target.closest(".user-detail-btn");
 			const userId = button.getAttribute("data-userid");
-			
-			document.querySelector(".modal-title").setAttribute("data-userid", userId);
+			/* document.querySelector(".modal-title").setAttribute("data-userid", userId); */
 			
 			fetch(`/admin/getUserInfo?userId=${userId}`)
 			.then(response => response.json())
 			.then(data => {
+				const date = new Date(data.createdAt);
+
+				const formattedDate = date.getFullYear() + '-' +
+				                      ('0' + (date.getMonth() + 1)).slice(-2) + '-' +
+				                      ('0' + date.getDate()).slice(-2) + ' ' +
+				                      ('0' + date.getHours()).slice(-2) + ':' +
+				                      ('0' + date.getMinutes()).slice(-2);
+				                      
 				document.querySelector(".modal-title").textContent = `${data.name} 님의 상세정보`;			
 				document.querySelector(".modal-body").innerHTML = 
 					`<p>ID : ${data.userId}</p>`+
 					`<p>Name : ${data.name}</p>`+
 					`<p>UserEmail : ${data.email}</p>`+
-					`<p>Created_at : ${data.createdAt}</p>`+
+					`<p>Created_at : ${formattedDate}</p>`+
 					`<p>Role : ${data.role}</p>`;
 					
-					const roleSelect = document.getElementById("roleSelect");
-	                for (let i = 0; i < roleSelect.options.length; i++) {
-	                    if (roleSelect.options[i].value === data.role) {
-	                        roleSelect.options[i].selected = true;
-	                        break; // 매칭되는 첫 번째 옵션을 선택하고 반복 종료
-	                    }
-	                }
+				const roleSelect = document.getElementById("roleSelect");
+                for (let i = 0; i < roleSelect.options.length; i++) {
+                    if (roleSelect.options[i].value === data.role) {
+                        roleSelect.options[i].selected = true;
+                        break; // 매칭되는 첫 번째 옵션을 선택하고 반복 종료
+                    }
+                }
+					
 			}).catch(error => {
 				console.error("Error fetching user details:", error);
 			})
@@ -184,8 +189,13 @@ document.addEventListener("DOMContentLoaded", function(){
 	})
 })
 
+// 모달 권한변경
 document.getElementById("roleSelectForm").addEventListener("submit", function(e){
 	e.preventDefault();
+	if(!confirm("권한을 변경하시겠습니까?")){
+		return false;
+	}
+	
 	const userId = document.querySelector(".modal-title").getAttribute("data-userid");
 	const selectedRole = document.getElementById("roleSelect").value;
 	console.log(userId);
@@ -216,6 +226,7 @@ document.getElementById("roleSelectForm").addEventListener("submit", function(e)
 		})
 		.then(data => {
             // 성공적인 응답 후 모달 창을 닫고 페이지를 새로 고침합니다.
+            alert("권한이 변경되었습니다.");
             $('#myModal').modal('hide'); // Bootstrap 5의 경우
             location.reload(); // 페이지 새로 고침
         })
@@ -233,7 +244,7 @@ document.getElementById("roleSelectForm").addEventListener("submit", function(e)
 	/* 회원 삭제 -> 참조 키에서 restrict 를 cascade 로 변경해야 삭제 가능*/
 	$(document).on("click", "#dropBtn", function(){
 		const userId = $(this).data("id");
-		alert(userId +"번을 삭제하시겠습니까?");
+		alert(userId +"번을 추방하시겠습니까?");
 		
 		var csrfToken = $("meta[name='_csrf']").attr("content");
         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -246,11 +257,11 @@ document.getElementById("roleSelectForm").addEventListener("submit", function(e)
             },
 		})
 		.done(function(resp){
-			alert(resp +"번 삭제 성공");
+			alert(resp +"번 추방 성공");
 			location.href = "/admin/totUser";
 		})
 		.fail(function(e){
-			alert("실패");
+			alert("추방 실패");
 		})
 	})
 
@@ -262,4 +273,3 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 </script>
 </div>
-

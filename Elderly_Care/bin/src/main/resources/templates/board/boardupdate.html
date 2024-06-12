@@ -5,7 +5,7 @@
 <body>
 
 	<div layout:fragment="content" class="content">
-	<form action="/board/update" method="get">
+	<form action="/board/boardupdate" method="post">
 		<div class="container mt-3">
 			<h3 th:text="${board.user.name} + '의 수정하기'"></h3>
 			<div class="mb-3 mt-3">
@@ -27,14 +27,12 @@
 					th:text="${board.content}"></textarea>
 			</div>
 			<div class="">
-				<button type="submit" class="btn btn-secondary btn-sm"
+				<button type="button" class="btn btn-secondary btn-sm"
 					id="btnModify">수정</button>
 			</div>
 		</div>
 		</form>
 		
-		
-
 
   		<script>
 			$("#btnModify").click(function() {
@@ -43,11 +41,19 @@
 					"title" : $("#title").val(),
 					"content" : $("#content").val()
 				}
+				console.log("작성자: ", data);
+				
+				var csrfToken = $("meta[name='_csrf']").attr("content");
+			    var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+			    
 					$.ajax({
-					type : "PUT",
-					url : "/board/update",
+					type : "put",
+					url : "/board/boardupdate",
 					contentType : "application/json;charset=utf-8",
 					data : JSON.stringify(data),
+					beforeSend: function(xhr) {
+		                xhr.setRequestHeader(csrfHeader, csrfToken);
+		            },
 					success : function(resp) {
 						alert(resp + "번 글 수정 성공");
 						location.href = "/board/boardlist";

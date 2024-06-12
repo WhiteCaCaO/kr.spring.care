@@ -3,6 +3,68 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/caregiverLayout}">
 
+
 <div layout:fragment="content" class="content">
-	<h2>매칭정보 페이지</h2>
+	<!-- 과거 매칭 -->
+	<div class="container mt-5 past-matching">
+    <h2>지난 매칭</h2>
+					    
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">이름</th> 
+            <th scope="col">지역</th> 
+            <th scope="col">매칭 날짜</th> 
+            <th scope="col">근무한 시간</th> 
+            <th scope="col">매칭 결과</th> 
+        </tr>
+        </thead>
+        <tbody>
+		 <!--  th:if="${matching.status.name() == 'COMPLETED' or matching.status.name() == 'CANCELLED'} -->
+        <tr th:each="matching, status : ${matchings}"> 
+            <th scope="row" th:text="${status.count}">1</th>
+            <td th:text="${matching.matchingUserName}"></td>
+            <td th:text="${matching.matchingCountry}"></td>
+            <td th:text="${matching.startDateStr} +' ~ '+ ${matching.endDateStr}"></td>
+            <td th:text="${matching.startTimeStr} +' ~ '+ ${matching.endTimeStr}"></td>
+            <td th:classappend="${matching.status.name() == 'COMPLETED' ? 'status-completed' : 
+                                      matching.status.name() == 'CANCELLED' ? 'status-cancelled' : ''}" 
+                    th:text="${matching.status.name() == 'COMPLETED' ? '완료' : 
+                              matching.status.name() == 'CANCELLED' ? '취소' : ''}"></td>
+        </tr>
+        </tbody>
+    </table>
+	</div>
+	<!-- 현재 매칭 -->
+	<div class="container mt-5 current-matching">
+    <h2>현재 매칭</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">이름</th> 
+            <th scope="col">지역</th> 
+            <th scope="col">매칭 날짜</th> 
+            <th scope="col">근무한 시간</th> 
+            <th scope="col">매칭 결과</th> 
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="matching, status  : ${matchings2}">
+            <th scope="row" th:text="${status.count}">1</th>
+            <td th:text="${matching.matchingUserName}"></td>
+            <td th:text="${matching.matchingCountry}"></td>
+            <td th:text="${matching.startDateStr} +' ~ '+ ${matching.endDateStr}"></td>
+            <td th:text="${matching.startTimeStr} +' ~ '+ ${matching.endTimeStr}"></td>
+            <td th:classappend="${matching.status.name() == 'POSTED' ? 'status-posted' : 
+                                       matching.status.name() == 'REQUESTED' ? 'status-requested' : 
+                                       matching.status.name() == 'IN_PROGRESS' ? 'status-in-progress' : ''}" 
+                    th:text="${matching.status.name() == 'POSTED' ? '구직중' : 
+                              matching.status.name() == 'REQUESTED' ? '요청중' : 
+                              matching.status.name() == 'IN_PROGRESS' ? '진행중' : ''}"></td>
+        </tr>
+        </tbody>
+    </table>
+	</div>
 <div>

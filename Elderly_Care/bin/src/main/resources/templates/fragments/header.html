@@ -19,10 +19,10 @@
             <a class="nav-link" href="/info" style="color: #fff;">THE 홈케어 소개 </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findcaregiver' : '/user/login/requireLogin'}" style="color: #fff;">요양보호사 구인</a>
+            <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findcaregiver' : '/member/login/requireLogin'}" style="color: #fff;">요양보호사 구인</a>
 			    </li>
 		  <li class="nav-item">
-		    <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findjob' : '/user/login/requireLogin'}" style="color: #fff;">요양보호사 구직</a>
+		    <a class="nav-link" th:href="${#authorization.expression('isAuthenticated()') ? '/matching/findjob' : '/member/login/requireLogin'}" style="color: #fff;">요양보호사 구직</a>
 		  </li>
           <li class="nav-item" sec:authorize="isAnonymous()">
             <a class="nav-link" href="/user/login" style="color: #fff;">로그인</a>
@@ -33,24 +33,20 @@
           
           <!-- 노인/보호자용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('USER')">
-
-            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">마이페이지</a>
-
+            <a class="nav-link" th:href="@{/userPage/myinfo/{id}(id=${loginId})}" style="color: #fff;">마이페이지</a>
           </li>
-           <li class="nav-item" sec:authorize="hasRole('SENIOR')">
+           <li class="nav-item" sec:authorize="hasRole('SENIOR') or hasRole('GUARDIAN')">
 
-            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">마이페이지</a>
-
-          </li><li class="nav-item" sec:authorize="hasRole('GUARDIAN')">
-
-            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">마이페이지</a>
-
+            <a class="nav-link" th:href="@{/seniorPage/myinfo/{id}(id=${loginId})}" style="color: #fff;">마이페이지</a>
           </li>
+          <!-- <li class="nav-item" sec:authorize="hasRole('GUARDIAN')">
+
+            <a class="nav-link" th:href="@{/guardianPage/myinfo/{id}(id=${loginId})}" style="color: #fff;">마이페이지</a>
+
+          </li>  -->
           <!-- 요양보호사용 마이페이지 -->
           <li class="nav-item" sec:authorize="hasRole('CAREGIVER')">
-
-            <a class="nav-link" href="/caregiverPage/myinfo" style="color: #fff;">마이페이지</a>
-
+            <a class="nav-link" th:href="@{/caregiverPage/myinfo/{id}(id=${loginId})}" style="color: #fff;">마이페이지</a>
           </li>
           
           <!-- 관리자용 마이페이지 -->

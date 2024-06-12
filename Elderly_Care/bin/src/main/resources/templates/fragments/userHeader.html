@@ -15,13 +15,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          
           <li class="nav-item" sec:authorize="isAuthenticated()">
-            <a class="nav-link" href="/userPage/myinfo" style="color: #fff;">나의정보</a>
+            <a class="nav-link" th:href="@{/userPage/myinfo/{id}(id=${loginId})}" style="color: #fff;">나의정보</a>
           </li>
-          <li class="nav-item" sec:authorize="isAuthenticated()">
+          <!-- <li class="nav-item" sec:authorize="isAuthenticated()">
+
             <a class="nav-link" href="/userPage/matchingInfo" style="color: #fff;">매칭정보</a>
-          </li>
+          </li> -->
          
           <li class="nav-item" sec:authorize="isAuthenticated()">
             <a class="nav-link" href="/user/logout" style="color: #fff;">로그아웃</a>
